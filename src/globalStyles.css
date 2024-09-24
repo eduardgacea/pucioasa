@@ -1,0 +1,32 @@
+:root {
+  /* color palette */
+  --white: #fdfdfd;
+  --black: #2f2f2f;
+  --beige: #f5f5dc;
+  --timberwolf: #d3d3d3;
+  --columbia-blue: #aec6cf;
+  --tea-green: #c1d9b9;
+  --misty-rose: #fadadd;
+  --khaki: #c5b299;
+  --davy-gray: #4f4f4f;
+
+  /* typography */
+  --serif: "Playfair Display", serif;
+  --sans: "Lato", sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: 1rem;
+  font-weight: normal;
+}
