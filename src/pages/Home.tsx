@@ -57,7 +57,7 @@ function Home() {
     <>
       <HeroSection>
         <HeroLeft>
-          <img src="src/assets/pucioasa-1.jpg" />
+          <img src="pucioasa-1.jpg" />
         </HeroLeft>
         <HeroRight>
           <Title>Pucioasa</Title>
