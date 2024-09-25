@@ -3,11 +3,12 @@ import { type TProduct } from "../types/product";
 import { useEffect, useState } from "react";
 
 import ProductCard from "../ui/ProductCard";
+
 import styled from "styled-components";
 
 const ProductsGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 2rem;
 `;
 
@@ -36,11 +37,7 @@ function Shop() {
 
   return (
     <ProductsGrid>
-      {isLoading
-        ? "Loading..."
-        : products.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
+      {isLoading ? "Loading..." : products.map((product) => <ProductCard key={product.id} product={product} />)}
     </ProductsGrid>
   );
 }
