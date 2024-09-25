@@ -1,11 +1,13 @@
 import type { TProduct } from "../types/product";
 
 import { CartContext } from "../features/Cart/CartContextProvider";
-import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+
+import QuantitySelector from "./QuantitySelector";
+import Button from "./Button";
 
 import styled from "styled-components";
-import Button from "./Button";
 
 const Card = styled.div`
   box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.25);
@@ -42,6 +44,11 @@ const Price = styled.p`
   font-family: var(--sans);
 `;
 
+const ProductCardActions = styled.div`
+  display: flex;
+  gap: 2rem;
+`;
+
 type Props = {
   product: TProduct;
 };
@@ -49,12 +56,11 @@ type Props = {
 function ProductCard({ product }: Props) {
   const { products, addProductToCart, removeProductFromCart } = useContext(CartContext);
 
-  const [isInCart, setIsInCart] = useState<boolean>(() => !!products.find((p) => p.id === product.id));
+  const isInCart = !!products.find((p) => p.id === product.id);
 
   const handleCartAction = () => {
     if (!isInCart) addProductToCart(product);
     else removeProductFromCart(product.id);
-    setIsInCart((prev) => !prev);
   };
 
   return (
@@ -64,9 +70,10 @@ function ProductCard({ product }: Props) {
         <Link to={`/shop/${product.id}`}>{product.name}</Link>
       </Title>
       <Price>{product.price} RON</Price>
-      <div>
+      <ProductCardActions>
         <Button onClick={handleCartAction}>{isInCart ? "Remove" : "Add"}</Button>
-      </div>
+        {isInCart && <QuantitySelector id={product.id} />}
+      </ProductCardActions>
     </Card>
   );
 }
