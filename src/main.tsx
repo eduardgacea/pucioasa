@@ -7,6 +7,7 @@ import Home from "./pages/Home.tsx";
 import Shop from "./pages/Shop.tsx";
 
 import "./globalStyles.css";
+import { CartContextProvider } from "./features/Cart/CartContextProvider.tsx";
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <CartContextProvider>
+      <RouterProvider router={router} />
+    </CartContextProvider>
   </StrictMode>
 );

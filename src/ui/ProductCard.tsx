@@ -1,11 +1,11 @@
+import type { TProduct } from "../types/product";
+
+import { CartContext } from "../features/Cart/CartContextProvider";
+import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
-import { type TProduct } from "../types/product";
 
 import styled from "styled-components";
-
-type Props = {
-  product: TProduct;
-};
+import Button from "./Button";
 
 const Card = styled.div`
   box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.25);
@@ -42,7 +42,21 @@ const Price = styled.p`
   font-family: var(--sans);
 `;
 
+type Props = {
+  product: TProduct;
+};
+
 function ProductCard({ product }: Props) {
+  const { products, addProductToCart, removeProductFromCart } = useContext(CartContext);
+
+  const [isInCart, setIsInCart] = useState<boolean>(() => !!products.find((p) => p.id === product.id));
+
+  const handleCartAction = () => {
+    if (!isInCart) addProductToCart(product);
+    else removeProductFromCart(product.id);
+    setIsInCart((prev) => !prev);
+  };
+
   return (
     <Card>
       <ProductImage src={product.image} />
@@ -50,6 +64,9 @@ function ProductCard({ product }: Props) {
         <Link to={`/shop/${product.id}`}>{product.name}</Link>
       </Title>
       <Price>{product.price} RON</Price>
+      <div>
+        <Button onClick={handleCartAction}>{isInCart ? "Remove" : "Add"}</Button>
+      </div>
     </Card>
   );
 }
