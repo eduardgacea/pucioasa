@@ -13,10 +13,7 @@ function Product() {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const { data, error } = await supabase
-          .from("products")
-          .select("*")
-          .eq("id", params.productId);
+        const { data, error } = await supabase.from("products").select("*").eq("id", params.productId);
         if (error) throw new Error(error.message);
         if (!data) throw new Error("failed to fetch products");
         setProduct(data[0]);
@@ -26,7 +23,7 @@ function Product() {
       }
     };
     fetchProduct();
-  }, []);
+  }, [params.productId]);
 
   if (error) return <div>Error: {error}</div>;
 
