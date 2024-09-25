@@ -22,38 +22,17 @@ function reducer(prevState: TCartContextState, action: TCartContextAction): TCar
     case "clearProductsFromCart":
       return { ...prevState, products: [] };
     case "incrementQty":
-      // when deploying to netlify/vercel, the "incrementQty" action does not work although it works fine locally
-      // for some reason, adding this redundant, useless code fixes the issue
-      const incrementNextState = {
-        ...prevState,
-        products: prevState.products.map((prevProduct) =>
-          prevProduct.id === action.payload ? { ...prevProduct, quantity: prevProduct.quantity++ } : prevProduct
-        ),
-      };
-      incrementNextState.products;
-      // ----------------------------------------------------------------------------------------------------- //
-
       return {
         ...prevState,
         products: prevState.products.map((prevProduct) =>
-          prevProduct.id === action.payload ? { ...prevProduct, quantity: prevProduct.quantity++ } : prevProduct
+          prevProduct.id === action.payload ? { ...prevProduct, quantity: prevProduct.quantity + 1 } : prevProduct
         ),
       };
     case "decrementQty":
-      // same here...
-      const decrementNextState = {
-        ...prevState,
-        products: prevState.products.map((prevProduct) =>
-          prevProduct.id === action.payload ? { ...prevProduct, quantity: prevProduct.quantity-- } : prevProduct
-        ),
-      };
-      decrementNextState.products;
-      // ----------------------------------------------------------------------------------------------------- //
-
       return {
         ...prevState,
         products: prevState.products.map((prevProduct) =>
-          prevProduct.id === action.payload ? { ...prevProduct, quantity: prevProduct.quantity-- } : prevProduct
+          prevProduct.id === action.payload ? { ...prevProduct, quantity: prevProduct.quantity - 1 } : prevProduct
         ),
       };
     default:
