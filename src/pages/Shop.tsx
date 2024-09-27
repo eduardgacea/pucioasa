@@ -1,6 +1,5 @@
-import { supabase } from "../services/supabase";
-import { type TProduct } from "../types/product";
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { fetchProducts } from "../api/products";
 
 import ProductCard from "../ui/ProductCard";
 
@@ -13,31 +12,24 @@ const ProductsGrid = styled.div`
 `;
 
 function Shop() {
-  const [products, setProducts] = useState<TProduct[]>([]);
-  const [error, setError] = useState("");
+  const {
+    isPending,
+    data: products,
+    error,
+  } = useQuery({
+    queryKey: ["products"],
+    queryFn: fetchProducts,
+  });
 
-  const isLoading = products.length === 0 && !error;
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const { data, error } = await supabase.from("products").select("*");
-        if (error) throw new Error(error.message);
-        if (!data) throw new Error("failed to fetch products");
-        setProducts(data);
-      } catch (err) {
-        if (err instanceof Error) setError(err.message);
-        else throw new Error("unrecognized error type");
-      }
-    };
-    fetchProducts();
-  }, []);
-
-  if (error) return <div>Error: {error}</div>;
+  if (error) return <div>Error: {error.message}</div>;
 
   return (
     <ProductsGrid>
-      {isLoading ? "Loading..." : products.map((product) => <ProductCard key={product.id} product={product} />)}
+      {isPending
+        ? "Loading..."
+        : products.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
     </ProductsGrid>
   );
 }

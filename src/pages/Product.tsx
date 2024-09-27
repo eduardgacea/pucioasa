@@ -1,33 +1,25 @@
-import { supabase } from "../services/supabase";
+import { useQuery } from "@tanstack/react-query";
+import { fetchProduct } from "../api/products";
 import { useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { TProduct } from "../types/product";
 
 function Product() {
-  const [product, setProduct] = useState<TProduct>();
-  const [error, setError] = useState("");
-  const params = useParams();
+  const { productId } = useParams();
 
-  const isLoading = !product && !error;
+  const {
+    isPending,
+    data: product,
+    error,
+  } = useQuery({
+    queryKey: ["product"],
+    queryFn: () => {
+      if (!productId) throw new Error("Could not find product ID");
+      return fetchProduct(+productId);
+    },
+  });
 
-  useEffect(() => {
-    const fetchProduct = async () => {
-      try {
-        const { data, error } = await supabase.from("products").select("*").eq("id", params.productId);
-        if (error) throw new Error(error.message);
-        if (!data) throw new Error("failed to fetch products");
-        setProduct(data[0]);
-      } catch (err) {
-        if (err instanceof Error) setError(err.message);
-        else throw new Error("unrecognized error type");
-      }
-    };
-    fetchProduct();
-  }, [params.productId]);
+  if (error) return <div>Error: {error.message}</div>;
 
-  if (error) return <div>Error: {error}</div>;
-
-  return isLoading ? (
+  return isPending ? (
     <div>Loading...</div>
   ) : (
     <>

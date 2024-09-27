@@ -1,5 +1,7 @@
 import { CartContextProvider } from "./features/Cart/CartContextProvider.tsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { queryClient } from "./services/react-query.ts";
 import { createRoot } from "react-dom/client";
 import { StrictMode } from "react";
 
@@ -42,8 +44,10 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <CartContextProvider>
-      <RouterProvider router={router} />
-    </CartContextProvider>
+    <QueryClientProvider client={queryClient}>
+      <CartContextProvider>
+        <RouterProvider router={router} />
+      </CartContextProvider>
+    </QueryClientProvider>
   </StrictMode>
 );
