@@ -39,7 +39,7 @@ function Header() {
         <Title>Pucioasa Banoasa</Title>
       </StyledLink>
       <Navigaton>
-        <LinkButton to="/user">Contul meu</LinkButton>
+        <LinkButton to="/account">Contul meu</LinkButton>
         <CartIcon />
       </Navigaton>
     </StyledHeader>

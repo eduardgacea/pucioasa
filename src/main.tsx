@@ -7,6 +7,7 @@ import { StrictMode } from "react";
 
 import ShopLayout from "./layouts/ShopLayout.tsx";
 import Checkout from "./pages/Checkout.tsx";
+import Account from "./pages/Account.tsx";
 import Product from "./pages/Product.tsx";
 import Cart from "./pages/Cart.tsx";
 import Home from "./pages/Home.tsx";
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
       {
         path: "/checkout",
         element: <Checkout />,
+      },
+      {
+        path: "/account",
+        element: <Account />,
       },
     ],
   },
