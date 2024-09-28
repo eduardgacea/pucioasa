@@ -1,11 +1,17 @@
 import { CartContext } from "../features/Cart/CartContextProvider";
+import { faXmark } from "@fortawesome/free-solid-svg-icons/faXmark";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Link } from "react-router-dom";
 import { useContext } from "react";
 
 import QuantitySelector from "../ui/QuantitySelector";
+import Button from "../ui/Button";
 
 import styled from "styled-components";
-import Button from "../ui/Button";
-import { Link } from "react-router-dom";
+
+const Icon = styled(FontAwesomeIcon)`
+  cursor: pointer;
+`;
 
 const CartItemsList = styled.ul`
   display: flex;
@@ -17,7 +23,7 @@ const CartItem = styled.li`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 35%;
+  width: 40%;
 `;
 
 const ProductDetails = styled.div`
@@ -59,7 +65,7 @@ const TotalPrice = styled.div`
 `;
 
 function Cart() {
-  const { products } = useContext(CartContext);
+  const { products, removeProductFromCart } = useContext(CartContext);
 
   if (products.length === 0)
     return (
@@ -85,6 +91,7 @@ function Cart() {
             <PriceDetails>
               <QuantitySelector id={product.id} />
               <Price>Pret total: {(product.quantity * product.price).toFixed(2)} RON</Price>
+              <Icon icon={faXmark} onClick={() => removeProductFromCart(product.id)} color="var(--imperial-red)" />
             </PriceDetails>
           </CartItem>
         ))}

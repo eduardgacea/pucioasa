@@ -36,9 +36,9 @@ function QuantitySelector({ id }: Props) {
 
   return (
     <StyledQuantitySelector>
-      <Action onClick={handleIncrement}>+</Action>
-      <Counter>{product?.quantity}</Counter>
       <Action onClick={handleDecrement}>-</Action>
+      <Counter>{product?.quantity}</Counter>
+      <Action onClick={handleIncrement}>+</Action>
     </StyledQuantitySelector>
   );
 }

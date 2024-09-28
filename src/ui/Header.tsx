@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import CartIcon from "./CartIcon";
 
 import styled from "styled-components";
+import LinkButton from "./LinkButton";
 
 const StyledHeader = styled.header`
   margin-bottom: 2rem;
@@ -25,7 +26,11 @@ const Title = styled.p`
   color: var(--davy-gray);
 `;
 
-const Navigaton = styled.nav``;
+const Navigaton = styled.nav`
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+`;
 
 function Header() {
   return (
@@ -34,6 +39,7 @@ function Header() {
         <Title>Pucioasa Banoasa</Title>
       </StyledLink>
       <Navigaton>
+        <LinkButton to="/user">Contul meu</LinkButton>
         <CartIcon />
       </Navigaton>
     </StyledHeader>
